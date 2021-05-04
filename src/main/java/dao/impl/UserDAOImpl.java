@@ -66,7 +66,7 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
     @Override
     public List<User> readAll() {
         List<User> allUser = new ArrayList<>();
-        String sql = "SELECT ID,NAME,LAST_NAME,EMAIL FROM USER";
+        String sql = "SELECT NAME,LAST_NAME,EMAIL,PASSWORD FROM USER";
         try (Statement statement = connection.createStatement()){
 
             ResultSet resultSet = statement.executeQuery(sql);
@@ -76,6 +76,7 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
                 user.setName(resultSet.getString("NAME"));
                 user.setLastName(resultSet.getString("LAST_NAME"));
                 user.setEmail(resultSet.getString("EMAIL"));
+                user.setPassword(resultSet.getString("PASSWORD"));
                 allUser.add(user);
             }
         } catch (SQLException throwables) {
@@ -87,16 +88,16 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
     @Override
     public User getByID(String email) throws SQLException {
         User user = new User();
-        String sql = "SELECT NAME,LAST_NAME,EMAIL FROM USER WHERE EMAIL = ?";
+        String sql = "SELECT NAME,LAST_NAME,EMAIL, password FROM USER WHERE EMAIL = ?";
         try (PreparedStatement statement = connection.prepareStatement(sql)){
             statement.setString(1,email);
-
 
             ResultSet resultSet = statement.executeQuery();
                 resultSet.next();
                 user.setName(resultSet.getString("NAME"));
                 user.setLastName(resultSet.getString("LAST_NAME"));
                 user.setEmail(resultSet.getString("EMAIL"));
+                user.setPassword(resultSet.getString("PASSWORD"));
                 return user;
 
         } catch (SQLException throwables) {
@@ -112,7 +113,7 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
 
 
 
-
+//create change email!!!!!!!!!!!!!!
     @Override
     public void update(User user) throws SQLException {
         String sql = "UPDATE USER SET NAME = ?, LAST_NAME = ?," +

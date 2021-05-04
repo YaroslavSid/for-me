@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="for-me2:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>for-me2</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="for-me2-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="for-me2:war exploded" />
+    </root>
+  </artifact>
+</component>
