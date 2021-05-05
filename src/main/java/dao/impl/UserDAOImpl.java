@@ -25,12 +25,7 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
             statement.setString(4, user.getPassword());
 
             statement.executeUpdate();
-
-//            int g =
-//            if(g == 1){
-//                getByID(user.getEmail());
-//            }
-
+            
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
@@ -64,7 +59,7 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
     }
 
     @Override
-    public List<User> readAll() {
+    public List<User> readAll() throws SQLException {
         List<User> allUser = new ArrayList<>();
         String sql = "SELECT NAME,LAST_NAME,EMAIL,PASSWORD FROM USER";
         try (Statement statement = connection.createStatement()){
@@ -81,6 +76,10 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+        }finally {
+            if (connection != null) {
+                connection.close();
+            }
         }
         return allUser;
     }
@@ -89,21 +88,20 @@ public class UserDAOImpl extends ConnectToDB implements UserDAO<User> {
     public User getByID(String email) throws SQLException {
         User user = new User();
         String sql = "SELECT NAME,LAST_NAME,EMAIL, password FROM USER WHERE EMAIL = ?";
-        try (PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1,email);
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, email);
 
             ResultSet resultSet = statement.executeQuery();
-                resultSet.next();
-                user.setName(resultSet.getString("NAME"));
-                user.setLastName(resultSet.getString("LAST_NAME"));
-                user.setEmail(resultSet.getString("EMAIL"));
-                user.setPassword(resultSet.getString("PASSWORD"));
-                return user;
+            resultSet.next();
+            user.setName(resultSet.getString("NAME"));
+            user.setLastName(resultSet.getString("LAST_NAME"));
+            user.setEmail(resultSet.getString("EMAIL"));
+            user.setPassword(resultSet.getString("PASSWORD"));
+            return user;
 
-        } catch (SQLException throwables) {
-            return null;
-        }
-        finally {
+        } catch (SQLException e) {
+            return  null;
+        } finally {
             if (connection != null) {
                 connection.close();
             }

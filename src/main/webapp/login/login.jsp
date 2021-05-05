@@ -1,5 +1,6 @@
 
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
 
 <!DOCTYPE html>
 <html>
@@ -10,20 +11,29 @@
 </head>
 
 <body>
+<form action="${pageContext.request.contextPath}/register">
+    <input type="submit" style="background-color:Goldenrod;color:White;"
+           value="Register"/>
+</form>
 <div align="center">
     <h1>Login Form</h1>
     <form action="<%=request.getContextPath()%>/login" method="post">
+
         <table style="with: 100%">
             <tr>
                 <td>Email</td>
-                <td><input type="text" name="email" /></td>
+                <td><label>
+                    <input type="text" name="email" />
+                </label></td>
             </tr>
             <tr>
                 <td>Password</td>
-                <td><input type="password" name="password" /></td>
+                <td><label>
+                    <input type="password" name="password" />
+                </label></td>
             </tr>
         </table>
-        <input type="submit" value="Submit" />
+        <input type="submit" style="background-color:LimeGreen;color:black;" value="Submit" />
     </form>
 </div>
 </body>
